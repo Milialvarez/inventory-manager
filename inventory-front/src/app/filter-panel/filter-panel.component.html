@@ -1,0 +1,51 @@
+<div class="flex flex-wrap justify-center items-center gap-8 pt-24">
+  <div class="bg-primary p-2 rounded-xl shadow-md border-2 border-secondary_dark">
+    <app-inventory-filters
+      label="Buscar por ID"
+      placeholder="Ej: 101"
+      filterKey="id"
+      [value]="filters['id']"
+      (valueChange)="handleFilterChange($event)">
+    </app-inventory-filters>
+  </div>
+
+  <div class="bg-primary p-2 rounded-xl shadow-md border-2 border-secondary_dark">
+    <app-inventory-filters
+      label="Buscar por RAM"
+      placeholder="Ej: 8GB"
+      filterKey="ram"
+      [value]="filters['ram']"
+      (valueChange)="handleFilterChange($event)">
+    </app-inventory-filters>
+  </div>
+
+  <div class="bg-primary p-2 rounded-xl shadow-md border-2 border-secondary_dark">
+    <app-inventory-filters
+      label="Buscar por CPU"
+      placeholder="Ej: Intel i5"
+      filterKey="cpu"
+      [value]="filters['cpu']"
+      (valueChange)="handleFilterChange($event)">
+    </app-inventory-filters>
+  </div>
+
+  <div class="bg-primary p-2 rounded-xl shadow-md border-2 border-secondary_dark">
+    <app-inventory-filters
+      label="Buscar por SSD"
+      placeholder="Ej: 256GB"
+      filterKey="ssd"
+      [value]="filters['ssd']"
+      (valueChange)="handleFilterChange($event)">
+    </app-inventory-filters>
+  </div>
+
+  <div class="bg-primary p-2 rounded-xl shadow-md border-2 border-secondary_dark">
+    <app-inventory-filters
+      label="Buscar por HDD"
+      placeholder="Ej: 1TB"
+      filterKey="hdd"
+      [value]="filters['hdd']"
+      (valueChange)="handleFilterChange($event)">
+    </app-inventory-filters>
+  </div>
+</div>
