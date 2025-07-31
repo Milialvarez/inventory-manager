@@ -1,0 +1,44 @@
+<div class="max-w-4xl mx-auto p-6 bg-secondary font-sans rounded-2xl shadow-sm mt-12">
+  <div class="w-full max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-secondary-dark mb-8 text-center">
+      Inventario completo:
+    </h2>
+
+    <div
+      *ngFor="let compuesto of elementosCompuestos"
+      class="bg-white border border-secondary-dark rounded-xl p-6 mb-6 shadow-md"
+    >
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 class="text-xl font-bold text-secondary-darker">
+            {{ compuesto.nombre }}
+          </h3>
+          <p><strong>ID personal:</strong> {{ compuesto.personalId }}</p>
+          <p><strong>Descripción:</strong> {{ compuesto.descripcion }}</p>
+          <p><strong>Ubicación:</strong> {{ compuesto.ubicacion }}</p>
+          <p><strong>Valor total:</strong> ${{ compuesto.valorCalculado | number }}</p>
+        </div>
+        <button
+          (click)="toggleDetalles(compuesto.id)"
+          class="bg-primary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+        >
+          {{ mostrarDetalles[compuesto.id] ? 'Ocultar' : 'Ver más' }}
+        </button>
+      </div>
+
+      <div *ngIf="mostrarDetalles[compuesto.id]" class="mt-4 border-l-4 border-primary pl-4">
+        <h4 class="text-secondary-dark font-semibold mb-2">Componentes asociados:</h4>
+        <ul class="space-y-1">
+          <li *ngFor="let comp of compuesto.componentes">
+            <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
+              <p>
+                <strong>{{ simple.nombre }}</strong> ({{ simple.tipo }}) — 
+                Valor unitario: ${{ simple.valorUnitario | number }}
+              </p>
+            </ng-container>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
