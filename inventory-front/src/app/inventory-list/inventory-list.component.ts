@@ -34,7 +34,7 @@ interface ElementoCompuesto {
   styleUrl: './inventory-list.component.scss'
 })
 
-export class InventarioComponent {
+export class InventoryComponent {
   mostrarDetalles: { [key: string]: boolean } = {};
 
   elementosSimples: ElementoSimple[] = [

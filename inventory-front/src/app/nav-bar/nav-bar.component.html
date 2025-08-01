@@ -4,12 +4,24 @@
   </div>
 
   <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-10 text-xl font-semibold pb-2">
-    <a routerLink="/inventario" class="hover:text-secondary_lighter transition-colors duration-200 ease-in-out">
-      Inventario
-    </a>
-    <a routerLink="/notas"
-      class="hover:text-secondary_lighter transition-colors duration-200 ease-in-out border-l border-white pl-9">
-      Notas
-    </a>
+    <a
+  routerLink="/inventario"
+  routerLinkActive="text-secondary_lighter drop-shadow-md"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="hover:text-secondary_lighter transition-colors duration-200 ease-in-out no-underline"
+>
+  Inventario
+</a>
+
+<a
+  routerLink="/notas"
+  routerLinkActive="text-secondary_lighter drop-shadow-md"
+  [routerLinkActiveOptions]="{ exact: true }"
+  class="hover:text-secondary_lighter transition-colors duration-200 ease-in-out no-underline"
+>
+  Notas
+</a>
+
+
   </div>
 </nav>
