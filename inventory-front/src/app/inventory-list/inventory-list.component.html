@@ -4,6 +4,14 @@
       Inventario completo:
     </h2>
 
+    <div class="flex justify-end mb-6">
+      <button (click)="agregarNuevoCompuesto()"
+        class="bg-green-600 hover:bg-green-700 text-white py-2 px-5 rounded-lg transition">
+        + Agregar nuevo compuesto
+      </button>
+    </div>
+
+
     <div *ngFor="let compuesto of elementosCompuestos"
       class="bg-white border border-secondary-dark rounded-xl p-6 mb-6 shadow-md">
       <div class="flex justify-between items-start">
@@ -20,6 +28,19 @@
           class="bg-primary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors">
           {{ mostrarDetalles[compuesto.id] ? 'Ocultar' : 'Ver más' }}
         </button>
+        <div class="mt-4 flex gap-2 justify-end">
+          <button (click)="iniciarEdicion(compuesto.id)"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md transition">
+            Editar
+          </button>
+
+          <button (click)="abrirConfirmacionEliminacion(compuesto.id)"
+            class="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded-md transition">
+            Eliminar
+          </button>
+
+        </div>
+
       </div>
 
       <div *ngIf="mostrarDetalles[compuesto.id]" class="mt-4 border-l-4 border-primary pl-4">
@@ -38,9 +59,9 @@
 
       <button (click)="toggleNota(compuesto.id)"
         class="bg-secondary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors mt-4">
-        {{ mostrarNotas[compuesto.id] 
-    ? 'Ocultar notas' 
-    : (compuesto.nota ? 'Ver notas' : 'Agregar nota') }}
+        {{ mostrarNotas[compuesto.id]
+        ? 'Ocultar notas'
+        : (compuesto.nota ? 'Ver notas' : 'Agregar nota') }}
 
       </button>
 
@@ -69,6 +90,31 @@
           {{ compuesto.nota || 'Sin contenido aún. Hacé clic en "Editar" para comenzar a escribir.' }}
         </div>
       </div>
+
+      <div *ngIf="idCompuestoEditando === compuesto.id" class="mt-6">
+        <app-inventory-item-editor [compuesto]="compuesto" [elementosSimplesDisponibles]="elementosSimples"
+          (cancelar)="idCompuestoEditando = null" (guardar)="guardarCompuestoEditado($event)">
+        </app-inventory-item-editor>
+      </div>
+
+      <div *ngIf="idPendienteAEliminar === compuesto.id"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md text-center">
+    <h3 class="text-xl font-bold text-secondary-dark mb-4">¿Está seguro de querer eliminar este elemento del inventario?</h3>
+    <p class="text-gray-700 mb-6">Esta acción no se puede deshacer. Los elementos simples no se verán afectados.</p>
+    <div class="flex justify-center gap-4">
+      <button (click)="confirmarEliminacion(compuesto.id)"
+        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition">
+        Sí, eliminar
+      </button>
+      <button (click)="cerrarConfirmacion()"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg transition">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 </div>

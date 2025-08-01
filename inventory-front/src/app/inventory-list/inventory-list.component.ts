@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { InventoryItemEditorComponent } from "../inventory-item-editor/inventory-item-editor.component";
 
 interface ElementoSimple {
   id: string;
@@ -32,7 +33,7 @@ interface ElementoCompuesto {
 @Component({
   standalone: true, 
   selector: 'app-inventory-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, InventoryItemEditorComponent],
   templateUrl: './inventory-list.component.html',
   styleUrl: './inventory-list.component.scss'
 })
@@ -99,6 +100,31 @@ modoEdicionNotas: { [key: string]: boolean } = {};
     },
   ];
 
+  idCompuestoEditando: string | null = null;
+
+iniciarEdicion(id: string): void {
+  this.idCompuestoEditando = id;
+  this.mostrarDetalles[id] = true;
+}
+
+eliminarCompuesto(id: string): void {
+  this.elementosCompuestos = this.elementosCompuestos.filter(c => c.id !== id);
+}
+
+agregarNuevoCompuesto(): void {
+  // Podés redirigir a una vista, o mostrar un formulario inline
+  const nuevo: ElementoCompuesto = {
+    id: `c${Date.now()}`,
+    personalId: Math.floor(Math.random() * 1000),
+    descripcion: '',
+    componentes: [],
+    valorCalculado: 0,
+  };
+  this.elementosCompuestos.push(nuevo);
+  this.iniciarEdicion(nuevo.id);
+}
+
+
   obtenerElementoSimple(id: string): ElementoSimple | undefined {
     return this.elementosSimples.find(e => e.id === id);
   }
@@ -140,5 +166,31 @@ guardarNota(id: string): void {
 
   localStorage.setItem('notasCompuestas', JSON.stringify(notas));
 }
+
+guardarCompuestoEditado(actualizado: ElementoCompuesto): void {
+  const index = this.elementosCompuestos.findIndex(c => c.id === actualizado.id);
+  if (index !== -1) {
+    this.elementosCompuestos[index] = { ...actualizado };
+  }
+  this.idCompuestoEditando = null;
+}
+
+idPendienteAEliminar: string | null = null;
+
+abrirConfirmacionEliminacion(id: string) {
+  this.idPendienteAEliminar = id;
+}
+
+cerrarConfirmacion() {
+  this.idPendienteAEliminar = null;
+}
+
+confirmarEliminacion(id: string) {
+  // Acá más adelante conectás con el backend
+  console.log(`Eliminando compuesto con id: ${id}`);
+  this.cerrarConfirmacion();
+}
+
+
 
 }
