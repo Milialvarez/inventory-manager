@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 interface ElementoSimple {
   id: string;
@@ -19,23 +20,28 @@ interface ComponenteAsociado {
 interface ElementoCompuesto {
   id: string;
   personalId: number;
-  nombre: string;
+  nombre?: string;
   descripcion?: string;
   componentes: ComponenteAsociado[];
   valorCalculado: number;
   ubicacion?: string;
+  nota?: string; // ✅ NUEVO
 }
+
 
 @Component({
   standalone: true, 
   selector: 'app-inventory-list',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './inventory-list.component.html',
   styleUrl: './inventory-list.component.scss'
 })
 
 export class InventoryComponent {
   mostrarDetalles: { [key: string]: boolean } = {};
+  mostrarNotas: { [key: string]: boolean } = {};
+modoEdicionNotas: { [key: string]: boolean } = {};
+
 
   elementosSimples: ElementoSimple[] = [
     {
@@ -68,7 +74,7 @@ export class InventoryComponent {
     {
       id: 'c1',
       personalId: 101,
-      nombre: 'PC Oficina #1',
+      nombre: 'Nuvix',
       descripcion: 'Computadora para tareas administrativas',
       componentes: [
         { elementoId: 's1', cantidad: 1 },
@@ -81,7 +87,7 @@ export class InventoryComponent {
     {
       id: 'c2',
       personalId: 102,
-      nombre: 'PC Diseño #1',
+      nombre: undefined,
       descripcion: 'Estación de trabajo para diseño gráfico',
       componentes: [
         { elementoId: 's1', cantidad: 1 },
@@ -100,4 +106,39 @@ export class InventoryComponent {
   toggleDetalles(id: string): void {
     this.mostrarDetalles[id] = !this.mostrarDetalles[id];
   }
+
+  toggleNota(id: string): void {
+  this.mostrarNotas[id] = !this.mostrarNotas[id];
+}
+
+editarNota(id: string): void {
+  this.modoEdicionNotas[id] = true;
+}
+
+
+ngOnInit() {
+  const notasGuardadas = localStorage.getItem('notasCompuestas');
+  if (notasGuardadas) {
+    const notas = JSON.parse(notasGuardadas);
+    this.elementosCompuestos.forEach(c => {
+      if (notas[c.id]) {
+        c.nota = notas[c.id];
+      }
+    });
+  }
+}
+
+guardarNota(id: string): void {
+  this.modoEdicionNotas[id] = false;
+
+  const notas = this.elementosCompuestos.reduce((acc, curr) => {
+    if (curr.nota) {
+      acc[curr.id] = curr.nota;
+    }
+    return acc;
+  }, {} as { [key: string]: string });
+
+  localStorage.setItem('notasCompuestas', JSON.stringify(notas));
+}
+
 }

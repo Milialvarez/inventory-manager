@@ -4,24 +4,20 @@
       Inventario completo:
     </h2>
 
-    <div
-      *ngFor="let compuesto of elementosCompuestos"
-      class="bg-white border border-secondary-dark rounded-xl p-6 mb-6 shadow-md"
-    >
+    <div *ngFor="let compuesto of elementosCompuestos"
+      class="bg-white border border-secondary-dark rounded-xl p-6 mb-6 shadow-md">
       <div class="flex justify-between items-start">
         <div>
           <h3 class="text-xl font-bold text-secondary-darker">
-            {{ compuesto.nombre }}
+            {{ compuesto.nombre || compuesto.personalId }}
           </h3>
           <p><strong>ID personal:</strong> {{ compuesto.personalId }}</p>
           <p><strong>Descripción:</strong> {{ compuesto.descripcion }}</p>
           <p><strong>Ubicación:</strong> {{ compuesto.ubicacion }}</p>
           <p><strong>Valor total:</strong> ${{ compuesto.valorCalculado | number }}</p>
         </div>
-        <button
-          (click)="toggleDetalles(compuesto.id)"
-          class="bg-primary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-        >
+        <button (click)="toggleDetalles(compuesto.id)"
+          class="bg-primary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors">
           {{ mostrarDetalles[compuesto.id] ? 'Ocultar' : 'Ver más' }}
         </button>
       </div>
@@ -32,12 +28,43 @@
           <li *ngFor="let comp of compuesto.componentes">
             <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
               <p>
-                <strong>{{ simple.nombre }}</strong> ({{ simple.tipo }}) — 
+                <strong>{{ simple.nombre }}</strong> ({{ simple.tipo }}) —
                 Valor unitario: ${{ simple.valorUnitario | number }}
               </p>
             </ng-container>
           </li>
         </ul>
+      </div>
+
+      <button (click)="toggleNota(compuesto.id)"
+        class="bg-secondary hover:bg-secondary-dark text-white font-semibold py-2 px-4 rounded-lg transition-colors mt-4">
+        {{ mostrarNotas[compuesto.id] ? 'Ocultar notas' : 'Ver notas' }}
+      </button>
+
+      <!-- Sección de notas -->
+      <div *ngIf="mostrarNotas[compuesto.id]" class="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-300">
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="text-lg font-semibold text-secondary-dark">Notas</h4>
+          <div class="space-x-2">
+            <button *ngIf="!modoEdicionNotas[compuesto.id]" (click)="editarNota(compuesto.id)"
+              class="px-4 py-1 bg-secondary text-white rounded-md hover:bg-secondary-dark transition">
+              Editar
+            </button>
+            <button *ngIf="modoEdicionNotas[compuesto.id]" (click)="guardarNota(compuesto.id)"
+              class="px-4 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+              Guardar
+            </button>
+          </div>
+        </div>
+
+        <textarea *ngIf="modoEdicionNotas[compuesto.id]" [(ngModel)]="compuesto.nota"
+          class="w-full min-h-[150px] p-3 border border-gray-300 rounded-lg resize-y focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent"
+          placeholder="Escribí una nota para este elemento..."></textarea>
+
+        <div *ngIf="!modoEdicionNotas[compuesto.id]"
+          class="whitespace-pre-wrap min-h-[150px] p-3 bg-white rounded-lg text-gray-800 border border-gray-200">
+          {{ compuesto.nota || 'Sin contenido aún. Hacé clic en "Editar" para comenzar a escribir.' }}
+        </div>
       </div>
     </div>
   </div>
