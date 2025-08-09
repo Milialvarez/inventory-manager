@@ -1,3 +1,4 @@
+// routes.ts
 import { Routes } from '@angular/router';
 import { InventorySectionComponent } from './inventory-section/inventory-section.component';
 import { SingleElementComponent } from './single-element/single-element.component';
@@ -11,11 +12,14 @@ export const routes: Routes = [
   },
   {
     path: 'inventario',
-    component: InventorySectionComponent // Lista con filtros
+    component: InventorySectionComponent
   },
   {
     path: 'inventario/:id',
-    component: SingleElementComponent // Vista detallada de un solo elemento
+    component: SingleElementComponent
   },
-   { path: 'add-element', component: AddElementPageComponent },
+  {
+    path: 'crear-compuesto',  // Nueva ruta
+    component: AddElementPageComponent
+  }
 ];
