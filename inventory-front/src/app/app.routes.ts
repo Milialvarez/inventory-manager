@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { InventorySectionComponent } from './inventory-section/inventory-section.component';
+import { SingleElementComponent } from './single-element/single-element.component';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,10 @@ export const routes: Routes = [
   },
   {
     path: 'inventario',
-    component: InventorySectionComponent // este mostrará el filtro y la lista
+    component: InventorySectionComponent // Lista con filtros
+  },
+  {
+    path: 'inventario/:id',
+    component: SingleElementComponent // Vista detallada de un solo elemento
   }
 ];

@@ -1,0 +1,78 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
+  <button 
+    (click)="volver()" 
+    class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
+    <span class="material-icons">arrow_back</span>
+    Volver al inventario
+  </button>
+
+  <h2 class="text-3xl font-bold mb-4">{{ elemento.nombre || elemento.personalId }}</h2>
+  <p><strong>ID personal:</strong> {{ elemento.personalId }}</p>
+  <p><strong>Descripción:</strong> {{ elemento.descripcion }}</p>
+  <p><strong>Ubicación:</strong> {{ elemento.ubicacion }}</p>
+  <p><strong>Valor total:</strong> ${{ elemento.valorCalculado | number }}</p>
+
+  <hr class="my-4">
+
+  <h3 class="text-xl font-semibold mb-2">Componentes asociados:</h3>
+
+  <!-- Vista normal -->
+  <ul *ngIf="!modoEdicion">
+    <li *ngFor="let comp of elemento.componentes">
+      <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
+        {{ simple.nombre }} ({{ simple.tipo }}) — Cantidad: {{ comp.cantidad }} — Valor: ${{ simple.valorUnitario | number }}
+      </ng-container>
+    </li>
+  </ul>
+
+  <!-- Vista edición -->
+  <div *ngIf="modoEdicion" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div *ngFor="let comp of elemento.componentes; let i = index" class="border rounded-lg p-4 bg-gray-50 shadow">
+      <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
+        <h4 class="font-semibold">{{ simple.nombre }}</h4>
+        <p>{{ simple.tipo }}</p>
+        <p>Valor unitario: ${{ simple.valorUnitario | number }}</p>
+        <label class="block mt-2 text-sm">Cantidad:
+          <input type="number" [(ngModel)]="comp.cantidad" min="1" class="border rounded px-2 py-1 w-20" />
+        </label>
+        <button (click)="eliminarComponente(i)" class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Agregar existente -->
+  <div *ngIf="modoEdicion" class="mt-6">
+    <label class="block mb-2">Agregar componente existente:</label>
+    <select [(ngModel)]="nuevoElementoId" class="border rounded px-2 py-1">
+      <option value="">-- Seleccionar --</option>
+      <option *ngFor="let simple of elementosSimples" [value]="simple.id">
+        {{ simple.nombre }} ({{ simple.tipo }})
+      </option>
+    </select>
+    <button (click)="agregarComponenteExistente()" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
+  </div>
+
+  <!-- Crear nuevo -->
+  <div *ngIf="modoEdicion" class="mt-6 border-t pt-4">
+    <h4 class="font-semibold mb-2">Crear y agregar nuevo componente</h4>
+    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
+    <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
+    <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" class="border rounded px-2 py-1 mr-2 w-28" />
+    <button (click)="crearYAgregarElemento()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y agregar</button>
+  </div>
+
+  <!-- Botones -->
+  <div class="mt-6 flex gap-4">
+    <button *ngIf="!modoEdicion" (click)="editarElemento()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">Editar</button>
+    <button *ngIf="modoEdicion" (click)="cancelarEdicion()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg">Cancelar</button>
+    <button (click)="toggleNotas()" class="bg-secondary hover:bg-secondary-dark text-white px-4 py-2 rounded-lg">
+      {{ mostrarNotas ? 'Ocultar notas' : (elemento.nota ? 'Ver notas' : 'Agregar nota') }}
+    </button>
+  </div>
+
+  <!-- Notas -->
+  <div *ngIf="mostrarNotas" class="mt-4 p-4 border rounded-lg bg-gray-50">
+    <textarea [(ngModel)]="elemento.nota" class="w-full min-h-[100px] p-2 border rounded-lg"></textarea>
+    <button (click)="guardarNota()" class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-lg">Guardar nota</button>
+  </div>
+</div>

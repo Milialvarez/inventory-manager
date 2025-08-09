@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { InventoryItemEditorComponent } from "../inventory-item-editor/inventory-item-editor.component";
+import { Router, RouterLink } from '@angular/router';
 
 interface ElementoSimple {
   id: string;
   nombre: string;
   tipo: string;
-  descripcion?: string;
   valorUnitario: number;
   stock: number;
   especificaciones: { [clave: string]: string | number };
@@ -26,49 +24,23 @@ interface ElementoCompuesto {
   componentes: ComponenteAsociado[];
   valorCalculado: number;
   ubicacion?: string;
-  nota?: string; // ✅ NUEVO
+  nota?: string;
 }
 
-
 @Component({
-  standalone: true, 
+  standalone: true,
   selector: 'app-inventory-list',
-  imports: [CommonModule, FormsModule, InventoryItemEditorComponent],
+  imports: [CommonModule, RouterLink],
   templateUrl: './inventory-list.component.html',
   styleUrl: './inventory-list.component.scss'
 })
-
 export class InventoryComponent {
-  mostrarDetalles: { [key: string]: boolean } = {};
-  mostrarNotas: { [key: string]: boolean } = {};
-modoEdicionNotas: { [key: string]: boolean } = {};
-
+  constructor(private router: Router) {}
 
   elementosSimples: ElementoSimple[] = [
-    {
-      id: 's1',
-      nombre: 'Intel Core i7',
-      tipo: 'CPU',
-      valorUnitario: 150000,
-      stock: 10,
-      especificaciones: { nucleos: 8, frecuencia: '3.6GHz' },
-    },
-    {
-      id: 's2',
-      nombre: 'Corsair Vengeance 16GB',
-      tipo: 'RAM',
-      valorUnitario: 40000,
-      stock: 20,
-      especificaciones: { tipo: 'DDR4', velocidad: '3200MHz' },
-    },
-    {
-      id: 's3',
-      nombre: 'SSD Samsung 1TB',
-      tipo: 'Almacenamiento',
-      valorUnitario: 60000,
-      stock: 15,
-      especificaciones: { tipo: 'NVMe', velocidad: '3500MB/s' },
-    },
+    { id: 's1', nombre: 'Intel Core i7', tipo: 'CPU', valorUnitario: 150000, stock: 10, especificaciones: { nucleos: 8, frecuencia: '3.6GHz' } },
+    { id: 's2', nombre: 'Corsair Vengeance 16GB', tipo: 'RAM', valorUnitario: 40000, stock: 20, especificaciones: { tipo: 'DDR4', velocidad: '3200MHz' } },
+    { id: 's3', nombre: 'SSD Samsung 1TB', tipo: 'Almacenamiento', valorUnitario: 60000, stock: 15, especificaciones: { tipo: 'NVMe', velocidad: '3500MB/s' } },
   ];
 
   elementosCompuestos: ElementoCompuesto[] = [
@@ -88,7 +60,6 @@ modoEdicionNotas: { [key: string]: boolean } = {};
     {
       id: 'c2',
       personalId: 102,
-      nombre: undefined,
       descripcion: 'Estación de trabajo para diseño gráfico',
       componentes: [
         { elementoId: 's1', cantidad: 1 },
@@ -100,97 +71,27 @@ modoEdicionNotas: { [key: string]: boolean } = {};
     },
   ];
 
-  idCompuestoEditando: string | null = null;
+   idPendienteAEliminar: string | null = null;
 
-iniciarEdicion(id: string): void {
-  this.idCompuestoEditando = id;
-  this.mostrarDetalles[id] = true;
-}
-
-eliminarCompuesto(id: string): void {
-  this.elementosCompuestos = this.elementosCompuestos.filter(c => c.id !== id);
-}
-
-agregarNuevoCompuesto(): void {
-  // Podés redirigir a una vista, o mostrar un formulario inline
-  const nuevo: ElementoCompuesto = {
-    id: `c${Date.now()}`,
-    personalId: Math.floor(Math.random() * 1000),
-    descripcion: '',
-    componentes: [],
-    valorCalculado: 0,
-  };
-  this.elementosCompuestos.push(nuevo);
-  this.iniciarEdicion(nuevo.id);
-}
-
-
-  obtenerElementoSimple(id: string): ElementoSimple | undefined {
-    return this.elementosSimples.find(e => e.id === id);
+  verDetalles(id: string) {
+    this.router.navigate(['/elemento', id]);
   }
 
-  toggleDetalles(id: string): void {
-    this.mostrarDetalles[id] = !this.mostrarDetalles[id];
+  abrirConfirmacionEliminacion(id: string) {
+    this.idPendienteAEliminar = id;
   }
 
-  toggleNota(id: string): void {
-  this.mostrarNotas[id] = !this.mostrarNotas[id];
-}
-
-editarNota(id: string): void {
-  this.modoEdicionNotas[id] = true;
-}
-
-
-ngOnInit() {
-  const notasGuardadas = localStorage.getItem('notasCompuestas');
-  if (notasGuardadas) {
-    const notas = JSON.parse(notasGuardadas);
-    this.elementosCompuestos.forEach(c => {
-      if (notas[c.id]) {
-        c.nota = notas[c.id];
-      }
-    });
+  cerrarConfirmacion() {
+    this.idPendienteAEliminar = null;
   }
-}
 
-guardarNota(id: string): void {
-  this.modoEdicionNotas[id] = false;
-
-  const notas = this.elementosCompuestos.reduce((acc, curr) => {
-    if (curr.nota) {
-      acc[curr.id] = curr.nota;
-    }
-    return acc;
-  }, {} as { [key: string]: string });
-
-  localStorage.setItem('notasCompuestas', JSON.stringify(notas));
-}
-
-guardarCompuestoEditado(actualizado: ElementoCompuesto): void {
-  const index = this.elementosCompuestos.findIndex(c => c.id === actualizado.id);
-  if (index !== -1) {
-    this.elementosCompuestos[index] = { ...actualizado };
+  confirmarEliminacion(id: string) {
+    console.log(`Eliminar compuesto con ID: ${id}`);
+    // 🔹 A futuro aquí iría la llamada al servicio para eliminar
+    this.cerrarConfirmacion();
   }
-  this.idCompuestoEditando = null;
-}
 
-idPendienteAEliminar: string | null = null;
-
-abrirConfirmacionEliminacion(id: string) {
-  this.idPendienteAEliminar = id;
-}
-
-cerrarConfirmacion() {
-  this.idPendienteAEliminar = null;
-}
-
-confirmarEliminacion(id: string) {
-  // Acá más adelante conectás con el backend
-  console.log(`Eliminando compuesto con id: ${id}`);
-  this.cerrarConfirmacion();
-}
-
-
-
+  agregarNuevoCompuesto() {
+    console.log('Agregar nuevo compuesto');
+  }
 }
