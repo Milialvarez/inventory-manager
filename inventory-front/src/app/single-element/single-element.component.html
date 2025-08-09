@@ -1,10 +1,11 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
   <button 
-    (click)="volver()" 
-    class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
-    <span class="material-icons">arrow_back</span>
-    Volver al inventario
-  </button>
+  (click)="volver()" 
+  class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
+  <img src="/logos-icons/arrow-back.svg" alt="Volver" class="w-5 h-5" />
+  Volver al inventario
+</button>
+
 
   <h2 class="text-3xl font-bold mb-4">{{ elemento.nombre || elemento.personalId }}</h2>
   <p><strong>ID personal:</strong> {{ elemento.personalId }}</p>

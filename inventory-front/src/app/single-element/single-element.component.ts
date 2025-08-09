@@ -53,9 +53,14 @@ export class SingleElementComponent {
     this.mostrarNotas = !this.mostrarNotas;
   }
 
-  guardarNota() {
-    console.log('Nota guardada:', this.elemento.nota);
-  }
+notaGuardada: string = '';
+
+guardarNota() {
+  this.notaGuardada = this.elemento.nota || '';
+  console.log('Nota guardada:', this.notaGuardada);
+  this.mostrarNotas = false;
+}
+
 
   editarElemento() {
     this.modoEdicion = true;

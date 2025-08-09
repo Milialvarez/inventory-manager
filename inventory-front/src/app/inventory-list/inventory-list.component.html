@@ -3,13 +3,6 @@
     Inventario completo:
   </h2>
 
-  <div class="flex justify-end mb-6">
-    <button (click)="agregarNuevoCompuesto()"
-      class="bg-green-600 hover:bg-green-700 text-white py-2 px-5 rounded-lg transition">
-      + Agregar nuevo compuesto
-    </button>
-  </div>
-
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     <div *ngFor="let compuesto of elementosCompuestos"
       class="bg-white border border-secondary-dark rounded-xl p-6 shadow-md flex flex-col justify-between">

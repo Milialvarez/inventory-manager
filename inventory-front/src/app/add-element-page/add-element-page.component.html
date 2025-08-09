@@ -1,0 +1,68 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
+  <button (click)="cancelar()" class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
+    <img src="/logos-icons/arrow-back.svg" alt="Volver" class="w-5 h-5" />
+    Volver al inventario
+  </button>
+
+  <h2 class="text-3xl font-bold mb-4">Crear nuevo Elemento Compuesto</h2>
+
+  <form (ngSubmit)="guardar()" class="space-y-4">
+    <div>
+      <label class="block font-semibold mb-1">ID Personal (Número)*</label>
+      <input type="number" [(ngModel)]="personalId" name="personalId" required class="border rounded px-3 py-2 w-full" />
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Nombre</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" class="border rounded px-3 py-2 w-full" />
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Descripción</label>
+      <textarea [(ngModel)]="descripcion" name="descripcion" class="border rounded px-3 py-2 w-full"></textarea>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Ubicación</label>
+      <input type="text" [(ngModel)]="ubicacion" name="ubicacion" class="border rounded px-3 py-2 w-full" />
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Nota</label>
+      <textarea [(ngModel)]="nota" name="nota" class="border rounded px-3 py-2 w-full"></textarea>
+    </div>
+
+    <hr>
+
+    <h3 class="text-xl font-semibold mb-2">Componentes asociados</h3>
+
+    <ul>
+      <li *ngFor="let comp of componentes; let i = index" class="flex justify-between items-center mb-2">
+        <span>ID: {{ comp.elementoId }} — Cantidad: {{ comp.cantidad }}</span>
+        <button type="button" (click)="eliminarComponente(i)" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
+      </li>
+    </ul>
+
+    <div class="flex gap-2 items-center mb-4">
+      <select [(ngModel)]="nuevoElementoId" name="nuevoElementoId" class="border rounded px-3 py-2 flex-grow">
+        <option value="">-- Seleccionar componente existente --</option>
+        <option *ngFor="let simple of elementosSimples" [value]="simple.id">{{ simple.nombre }} ({{ simple.tipo }})</option>
+      </select>
+      <input type="number" [(ngModel)]="nuevaCantidad" name="nuevaCantidad" min="1" class="border rounded px-3 py-2 w-20" />
+      <button type="button" (click)="agregarComponenteExistente()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
+    </div>
+
+    <div class="border-t pt-4">
+      <h4 class="font-semibold mb-2">Crear y agregar nuevo componente simple</h4>
+      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" name="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
+      <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" name="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
+      <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" name="nuevoElementoValor" class="border rounded px-2 py-1 mr-2 w-28" />
+      <button type="button" (click)="crearYAgregarNuevoSimple()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y agregar</button>
+    </div>
+
+    <div class="mt-6 flex gap-4">
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">Guardar</button>
+      <button type="button" (click)="cancelar()" class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg">Cancelar</button>
+    </div>
+  </form>
+</div>

@@ -91,7 +91,8 @@ export class InventoryComponent {
     this.cerrarConfirmacion();
   }
 
-  agregarNuevoCompuesto() {
-    console.log('Agregar nuevo compuesto');
+    guardarNuevoElemento(nuevoElemento: any) {
+    // Aquí llamás a tu servicio para guardar en base de datos, o actualizás tu lista local
+    console.log('Guardar elemento:', nuevoElemento);
   }
 }
