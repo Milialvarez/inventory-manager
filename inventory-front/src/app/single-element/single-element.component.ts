@@ -95,4 +95,33 @@ guardarNota() {
     this.nuevoElementoTipo = '';
     this.nuevoElementoValor = 0;
   }
+
+  // En single-element.component.ts, agrega este método:
+
+guardarCambios() {
+  // Aquí podrías recalcular el valor total si es necesario
+  this.recalcularValorTotal();
+  
+  // Aquí llamarías a tu servicio para persistir los cambios
+  // this.inventarioService.actualizarElementoCompuesto(this.elemento);
+  
+  console.log('Cambios guardados:', this.elemento);
+  
+  // Salir del modo edición
+  this.modoEdicion = false;
+  
+  // Limpiar campos auxiliares
+  this.nuevoElementoId = '';
+  this.nuevoElementoNombre = '';
+  this.nuevoElementoTipo = '';
+  this.nuevoElementoValor = 0;
+}
+
+// Método auxiliar para recalcular el valor total
+private recalcularValorTotal() {
+  this.elemento.valorCalculado = this.elemento.componentes.reduce((total: number, comp: any) => {
+    const elementoSimple = this.obtenerElementoSimple(comp.elementoId);
+    return total + (elementoSimple ? elementoSimple.valorUnitario * comp.cantidad : 0);
+  }, 0);
+}
 }
