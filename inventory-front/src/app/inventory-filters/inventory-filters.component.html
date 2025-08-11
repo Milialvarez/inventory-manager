@@ -1,10 +1,21 @@
-<div class="mb-4">
-  <label class="text-white font-bold mb-1 block">{{ label }}</label>
+<div class="relative w-72 h-12">
   <input
     type="text"
-    class="w-full px-3 py-2 border border-gray-300 rounded-lg text-black"
+    id="{{ label }}"
+    class="peer w-full rounded-xl px-4 pt-6 pb-2 bg-white text-gray-900 placeholder-transparent
+           border border-gray-300 shadow-sm
+           focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400
+           transition-all duration-300 h-full"
     [placeholder]="placeholder"
     [value]="value"
     (input)="onInputChange($event)"
   />
+  <label
+    for="{{ label }}"
+    class="absolute left-4 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5
+           peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base
+           peer-focus:top-3 peer-focus:text-green-600 peer-focus:text-sm cursor-text select-none"
+  >
+    {{ label }}
+  </label>
 </div>

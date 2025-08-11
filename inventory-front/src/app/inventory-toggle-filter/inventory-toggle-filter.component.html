@@ -1,0 +1,16 @@
+<div
+  class="flex items-center justify-between cursor-pointer select-none bg-white p-3 px-4 rounded-xl border border-gray-300 w-72 h-12"
+  (click)="toggle()"
+>
+  <label class="text-gray-400 font-semibold select-none">En Stock</label>
+
+  <div
+    class="w-14 h-7 rounded-full relative transition-colors duration-300"
+    [ngClass]="value ? 'bg-green-500' : 'bg-gray-300'"
+  >
+    <span
+      class="block w-5 h-5 bg-white rounded-full shadow-md absolute top-1 left-1 transition-transform duration-300"
+      [style.transform]="value ? 'translateX(28px)' : 'translateX(0)'"
+    ></span>
+  </div>
+</div>

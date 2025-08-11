@@ -13,8 +13,10 @@ export class InventoryFiltersComponent {
   @Input() value: string = '';
   @Output() valueChange = new EventEmitter<{ key: string, value: string }>();
 
-  onInputChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.valueChange.emit({ key: this.filterKey, value: input.value });
-  }
+  // cuando detectás cambio en input
+onInputChange(event: Event) {
+  const value = (event.target as HTMLInputElement).value;
+  this.valueChange.emit({ key: this.filterKey, value });
+}
+
 }
