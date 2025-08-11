@@ -1,4 +1,5 @@
 // add-element-page.component.ts
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,14 +19,15 @@ interface ElementoSimple {
 @Component({
   standalone: true,
   selector: 'app-add-element-page',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './add-element-page.component.html',
 })
 export class AddElementPageComponent {
   personalId!: number;
   nombre = '';
   descripcion = '';
-  ubicacion = '';
+  ubicacion: string = '';
+  usuarioUso: string = '';
   nota = '';
   componentes: ComponenteAsociado[] = [];
 
@@ -42,7 +44,7 @@ export class AddElementPageComponent {
   nuevoElementoTipo = '';
   nuevoElementoValor = 0;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   agregarComponenteExistente() {
     if (this.nuevoElementoId && this.nuevaCantidad > 0) {
