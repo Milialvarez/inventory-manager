@@ -1,19 +1,15 @@
 <div class="flex h-screen w-full">
-  <!-- Panel de filtros -->
   <div class="flex-[0_0_25%] border-r border-gray-300 p-4 overflow-y-auto">
     <app-filter-panel></app-filter-panel>
   </div>
 
-  <!-- Sección principal -->
   <div class="flex-[0_0_75%] p-4 flex flex-col">
-    <!-- Contenedor de botones -->
     <div class="w-full flex justify-center gap-4">
       <app-add-element-button></app-add-element-button>
       <app-report-button></app-report-button>
     </div>
 
-    <!-- Lista debajo -->
-    <div class="mt-4 flex-1 overflow-auto">
+    <div class="flex-1 overflow-auto">
       <app-inventory-list></app-inventory-list>
     </div>
   </div>

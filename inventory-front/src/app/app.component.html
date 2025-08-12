@@ -1,4 +1,13 @@
-<div class="bg-background pb-8 mb-0">
-  <app-nav-bar></app-nav-bar>
-  <router-outlet></router-outlet>
+<div class="relative min-h-screen pb-8 mb-0">
+  <div 
+    class="absolute inset-0 bg-[url('/backgrounds/nebula-background.jpg')] bg-cover bg-center bg-fixed"
+    aria-hidden="true"
+  ></div>
+
+  <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+
+  <div class="relative z-10">
+    <app-nav-bar></app-nav-bar>
+    <router-outlet></router-outlet>
+  </div>
 </div>
