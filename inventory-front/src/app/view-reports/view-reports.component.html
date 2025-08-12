@@ -1,8 +1,11 @@
-<!-- report-button.component.html -->
 <button
   (click)="descargarReporte()"
-  class="flex items-center gap-2 px-4 py-2 bg-primary_darker hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition"
+  class="group flex items-center gap-2 px-4 py-2 bg-primary_darker hover:bg-primary_dark text-white hover:text-secondary_darker font-medium rounded-lg shadow-md transition"
 >
-  <img src="/assets/icons/download-arrow.svg" alt="Descargar" class="w-5 h-5" />
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+       class="w-5 h-5 fill-white group-hover:fill-secondary_darker transition">
+    <path d="M480-240 240-480l56-56 144 144v-368h80v368l144-144 56 56-240 240Z"/>
+  </svg>
   Descargar reporte
 </button>
+

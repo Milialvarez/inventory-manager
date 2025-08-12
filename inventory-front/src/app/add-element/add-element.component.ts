@@ -6,12 +6,11 @@ import { Router } from '@angular/router';
   standalone: true,
   selector: 'app-add-element-button',
   template: `
-   <div class="flex justify-center mt-9">
-    <button (click)="onClick()"
-      class="flex items-center gap-2 px-4 py-2 bg-primary_darker hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition">
-      Agregar nuevo compuesto
-    </button>
-  </div>
+<button (click)="onClick()"
+  class="flex items-center gap-2 px-4 py-2 bg-primary_darker hover:bg-primary_dark text-white hover:text-secondary_darker font-medium rounded-lg shadow-md transition">
+  <span>Agregar nuevo compuesto</span>
+</button>
+
   `,
 })
 export class AddElementButtonComponent {
