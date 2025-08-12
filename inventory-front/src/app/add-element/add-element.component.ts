@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   template: `
    <div class="flex justify-center mt-9">
     <button (click)="onClick()"
-      class="bg-green-600 hover:bg-green-700 text-white py-2 px-5 rounded-lg transition">
-      + Agregar nuevo compuesto
+      class="flex items-center gap-2 px-4 py-2 bg-primary_darker hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition">
+      Agregar nuevo compuesto
     </button>
   </div>
   `,
