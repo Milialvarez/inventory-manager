@@ -1,10 +1,11 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
-  <button 
-  (click)="volver()" 
-  class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
-  <img src="/logos-icons/arrow-back.svg" alt="Volver" class="w-5 h-5" />
-  Volver al inventario
-</button>
+  <button (click)="volver()"
+    class="flex items-center gap-2 mb-6 text-primary_darker hover:text-secondary-dark transition">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#24842C">
+      <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+    </svg>
+    Volver al inventario
+  </button>
 
 
   <h2 class="text-3xl font-bold mb-4">{{ elemento.nombre || elemento.personalId }}</h2>
@@ -21,7 +22,8 @@
   <ul *ngIf="!modoEdicion">
     <li *ngFor="let comp of elemento.componentes">
       <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
-        {{ simple.nombre }} ({{ simple.tipo }}) — Cantidad: {{ comp.cantidad }} — Valor: ${{ simple.valorUnitario | number }}
+        {{ simple.nombre }} ({{ simple.tipo }}) — Cantidad: {{ comp.cantidad }} — Valor: ${{ simple.valorUnitario |
+        number }}
       </ng-container>
     </li>
   </ul>
@@ -36,7 +38,8 @@
         <label class="block mt-2 text-sm">Cantidad:
           <input type="number" [(ngModel)]="comp.cantidad" min="1" class="border rounded px-2 py-1 w-20" />
         </label>
-        <button (click)="eliminarComponente(i)" class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
+        <button (click)="eliminarComponente(i)"
+          class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
       </ng-container>
     </div>
   </div>
@@ -50,7 +53,8 @@
         {{ simple.nombre }} ({{ simple.tipo }})
       </option>
     </select>
-    <button (click)="agregarComponenteExistente()" class="ml-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
+    <button (click)="agregarComponenteExistente()"
+      class="ml-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
   </div>
 
   <!-- Crear nuevo -->
@@ -58,16 +62,28 @@
     <h4 class="font-semibold mb-2">Crear y agregar nuevo componente</h4>
     <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
     <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
-    <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" class="border rounded px-2 py-1 mr-2 w-28" />
-    <button (click)="crearYAgregarElemento()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y agregar</button>
+    <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor"
+      class="border rounded px-2 py-1 mr-2 w-28" />
+    <button (click)="crearYAgregarElemento()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y
+      agregar</button>
   </div>
 
   <!-- Botones -->
   <div class="mt-6 flex gap-4">
-    <button *ngIf="!modoEdicion" (click)="editarElemento()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg">Editar</button>
-     <button *ngIf="modoEdicion" (click)="guardarCambios()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">Guardar cambios</button>
-    <button *ngIf="modoEdicion" (click)="cancelarEdicion()" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg">Cancelar</button>
-    <button (click)="toggleNotas()" class="bg-secondary hover:bg-secondary-dark text-white px-4 py-2 rounded-lg">
+    <button *ngIf="!modoEdicion" (click)="editarElemento()"
+      class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
+        <path
+          d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+      </svg>
+      Editar
+    </button>
+
+    <button *ngIf="modoEdicion" (click)="guardarCambios()"
+      class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">Guardar cambios</button>
+    <button *ngIf="modoEdicion" (click)="cancelarEdicion()"
+      class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg">Cancelar</button>
+    <button (click)="toggleNotas()" class="bg-secondary hover:bg-secondary_dark text-white px-4 py-2 rounded-lg">
       {{ mostrarNotas ? 'Ocultar notas' : (elemento.nota ? 'Ver notas' : 'Agregar nota') }}
     </button>
   </div>
@@ -75,6 +91,7 @@
   <!-- Notas -->
   <div *ngIf="mostrarNotas" class="mt-4 p-4 border rounded-lg bg-gray-50">
     <textarea [(ngModel)]="elemento.nota" class="w-full min-h-[100px] p-2 border rounded-lg"></textarea>
-    <button (click)="guardarNota()" class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-lg">Guardar nota</button>
+    <button (click)="guardarNota()" class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-1 rounded-lg">Guardar
+      nota</button>
   </div>
 </div>

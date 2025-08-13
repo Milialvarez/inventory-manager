@@ -1,6 +1,6 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
-  <button (click)="cancelar()" class="flex items-center gap-2 mb-6 text-primary hover:text-secondary-dark transition">
-    <img src="/logos-icons/arrow-back.svg" alt="Volver" class="w-5 h-5" />
+  <button (click)="cancelar()" class="flex items-center gap-2 mb-6 text-primary_darker hover:text-secondary-dark transition">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#24842C"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
     Volver al inventario
   </button>
 
@@ -73,11 +73,11 @@
       <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" name="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
       <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" name="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
       <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" name="nuevoElementoValor" class="border rounded px-2 py-1 mr-2 w-28" />
-      <button type="button" (click)="crearYAgregarNuevoSimple()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y agregar</button>
+      <button type="button" (click)="crearYAgregarNuevoSimple()" class="bg-secondary_dark hover:bg-secondary_darker text-white px-3 py-1 rounded">Crear y agregar</button>
     </div>
 
     <div class="mt-6 flex gap-4">
-      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">Guardar</button>
+      <button type="submit" class="bg-primary_darker hover:bg-primary_dark text-white px-6 py-2 rounded-lg">Guardar</button>
       <button type="button" (click)="cancelar()" class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg">Cancelar</button>
     </div>
   </form>

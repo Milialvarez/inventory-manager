@@ -3,7 +3,7 @@
   label="Buscar por ID"
   placeholder="Ej: 101"
   [filterKey]="'id'"
-  [value]="filters['id']?.toString() || ''"
+  [value]="filters['id'].toString() || ''"
   (valueChange)="handleFilterChange($event)"
 ></app-inventory-filters>
 
@@ -13,7 +13,7 @@
   label="Buscar por palabra clave"
   placeholder="Ej: CPU, RAM, SSD"
   [filterKey]="'descripcion'"
-  [value]="filters['descripcion']?.toString() || ''"
+  [value]="filters['descripcion'].toString() || ''"
   (valueChange)="handleFilterChange($event)"
 ></app-inventory-filters>
 
