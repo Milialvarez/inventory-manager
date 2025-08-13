@@ -1,6 +1,9 @@
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-sm mt-8">
-  <button (click)="cancelar()" class="flex items-center gap-2 mb-6 text-primary_darker hover:text-secondary-dark transition">
-    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#24842C"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+  <button (click)="cancelar()"
+    class="flex items-center gap-2 mb-6 text-primary_darker hover:text-secondary-dark transition">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#24842C">
+      <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+    </svg>
     Volver al inventario
   </button>
 
@@ -9,7 +12,8 @@
   <form (ngSubmit)="guardar()" class="space-y-4">
     <div>
       <label class="block font-semibold mb-1">ID Personal (Número)*</label>
-      <input type="number" [(ngModel)]="personalId" name="personalId" required class="border rounded px-3 py-2 w-full" />
+      <input type="number" [(ngModel)]="personalId" name="personalId" required
+        class="border rounded px-3 py-2 w-full" />
     </div>
 
     <div>
@@ -22,25 +26,36 @@
       <textarea [(ngModel)]="descripcion" name="descripcion" class="border rounded px-3 py-2 w-full"></textarea>
     </div>
 
-    <div>
-  <label class="block font-semibold mb-1">Ubicación</label>
+   <div class="flex flex-col mb-4">
+  <label class="block font-semibold mb-1">Tipo de elemento</label>
   
-  <!-- Select de ubicación -->
-  <select [(ngModel)]="ubicacion" name="ubicacion" 
-          class="border rounded px-3 py-2 w-full">
+  <!-- Select de tipo -->
+  <select [(ngModel)]="nuevoElementoTipo" name="tipo" class="border rounded px-3 py-2 w-full">
     <option value="">Seleccionar...</option>
-    <option value="en uso">En uso</option>
-    <option value="en stock">En stock</option>
+    <option value="Monitor">Monitor</option>
+    <option value="PC">PC</option>
+    <option value="Periférico">Periférico</option>
+    <option value="Otro">Otro</option>
   </select>
-
-  <!-- Campo extra solo si está en uso -->
-  <div *ngIf="ubicacion === 'en uso'" class="mt-3">
-    <label class="block font-semibold mb-1">Quién lo está usando</label>
-    <input type="text" [(ngModel)]="usuarioUso" name="usuarioUso" 
-           placeholder="Nombre de la persona"
-           class="border rounded px-3 py-2 w-full" />
-  </div>
 </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Ubicación</label>
+
+      <!-- Select de ubicación -->
+      <select [(ngModel)]="ubicacion" name="ubicacion" class="border rounded px-3 py-2 w-full">
+        <option value="">Seleccionar...</option>
+        <option value="en uso">En uso</option>
+        <option value="en stock">En stock</option>
+      </select>
+
+      <!-- Campo extra solo si está en uso -->
+      <div *ngIf="ubicacion === 'en uso'" class="mt-3">
+        <label class="block font-semibold mb-1">Quién lo está usando</label>
+        <input type="text" [(ngModel)]="usuarioUso" name="usuarioUso" placeholder="Nombre de la persona"
+          class="border rounded px-3 py-2 w-full" />
+      </div>
+    </div>
 
 
     <div>
@@ -55,30 +70,40 @@
     <ul>
       <li *ngFor="let comp of componentes; let i = index" class="flex justify-between items-center mb-2">
         <span>ID: {{ comp.elementoId }} — Cantidad: {{ comp.cantidad }}</span>
-        <button type="button" (click)="eliminarComponente(i)" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
+        <button type="button" (click)="eliminarComponente(i)"
+          class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded">Eliminar</button>
       </li>
     </ul>
 
     <div class="flex gap-2 items-center mb-4">
       <select [(ngModel)]="nuevoElementoId" name="nuevoElementoId" class="border rounded px-3 py-2 flex-grow">
         <option value="">-- Seleccionar componente existente --</option>
-        <option *ngFor="let simple of elementosSimples" [value]="simple.id">{{ simple.nombre }} ({{ simple.tipo }})</option>
+        <option *ngFor="let simple of elementosSimples" [value]="simple.id">{{ simple.nombre }} ({{ simple.tipo }})
+        </option>
       </select>
-      <input type="number" [(ngModel)]="nuevaCantidad" name="nuevaCantidad" min="1" class="border rounded px-3 py-2 w-20" />
-      <button type="button" (click)="agregarComponenteExistente()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
+      <input type="number" [(ngModel)]="nuevaCantidad" name="nuevaCantidad" min="1"
+        class="border rounded px-3 py-2 w-20" />
+      <button type="button" (click)="agregarComponenteExistente()"
+        class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
     </div>
 
     <div class="border-t pt-4">
       <h4 class="font-semibold mb-2">Crear y agregar nuevo componente simple</h4>
-      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" name="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
-      <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" name="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
-      <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" name="nuevoElementoValor" class="border rounded px-2 py-1 mr-2 w-28" />
-      <button type="button" (click)="crearYAgregarNuevoSimple()" class="bg-secondary_dark hover:bg-secondary_darker text-white px-3 py-1 rounded">Crear y agregar</button>
+      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" name="nuevoElementoNombre"
+        class="border rounded px-2 py-1 mr-2" />
+      <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" name="nuevoElementoTipo"
+        class="border rounded px-2 py-1 mr-2" />
+      <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" name="nuevoElementoValor"
+        class="border rounded px-2 py-1 mr-2 w-28" />
+      <button type="button" (click)="crearYAgregarNuevoSimple()"
+        class="bg-secondary_dark hover:bg-secondary_darker text-white px-3 py-1 rounded">Crear y agregar</button>
     </div>
 
     <div class="mt-6 flex gap-4">
-      <button type="submit" class="bg-primary_darker hover:bg-primary_dark text-white px-6 py-2 rounded-lg">Guardar</button>
-      <button type="button" (click)="cancelar()" class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg">Cancelar</button>
+      <button type="submit"
+        class="bg-primary_darker hover:bg-primary_dark text-white px-6 py-2 rounded-lg">Guardar</button>
+      <button type="button" (click)="cancelar()"
+        class="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg">Cancelar</button>
     </div>
   </form>
 </div>
