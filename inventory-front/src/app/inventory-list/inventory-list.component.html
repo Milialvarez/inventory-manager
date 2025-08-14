@@ -6,7 +6,6 @@
     <div *ngFor="let compuesto of elementosCompuestos"
       class="bg-white border border-secondary-dark rounded-xl p-6 shadow-md flex flex-col justify-between">
 
-      <!-- Info básica -->
       <div>
         <h3 class="text-xl font-bold text-secondary-darker">
           {{ compuesto.nombre || compuesto.personalId }}
@@ -17,7 +16,6 @@
         <p><strong>Valor total:</strong> ${{ compuesto.valorCalculado | number }}</p>
       </div>
 
-      <!-- Botones -->
       <div class="flex justify-between mt-4">
         <button [routerLink]="['/inventario', compuesto.id]" class="bg-primary hover:bg-primary_dark text-white px-4 py-2 rounded">
           Ver más

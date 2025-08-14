@@ -112,7 +112,41 @@ elementosCompuestos: ElementoCompuesto[] = [
     ],
     valorCalculado: 150000 + 2 * 25000 + 6 * 25000 + 35000 + 20000,
     ubicacion: 'Data Center'
-  }
+  },
+  {
+  id: 'c5',
+  personalId: 105,
+  nombre: 'RenderStation X',
+  descripcion: 'Estación de renderizado 3D para proyectos audiovisuales',
+  componentes: [
+    { elementoId: 's4', cantidad: 1 },  
+    { elementoId: 's2', cantidad: 4 },  
+    { elementoId: 's7', cantidad: 2 },  
+    { elementoId: 's3', cantidad: 2 },  
+    { elementoId: 's9', cantidad: 1 }, 
+    { elementoId: 's10', cantidad: 1 } 
+  ],
+  valorCalculado: 180000 + 4 * 40000 + 2 * 300000 + 2 * 60000 + 35000 + 20000,
+  ubicacion: 'Estudio de Render'
+},
+{
+  id: 'c6',
+  personalId: 106,
+  nombre: 'Edición Ultra',
+  descripcion: 'Equipo para edición de video 8K y efectos visuales',
+  componentes: [
+    { elementoId: 's1', cantidad: 1 }, 
+    { elementoId: 's2', cantidad: 2 }, 
+    { elementoId: 's8', cantidad: 1 },  
+    { elementoId: 's3', cantidad: 2 }, 
+    { elementoId: 's6', cantidad: 2 }, 
+    { elementoId: 's9', cantidad: 1 },  
+    { elementoId: 's10', cantidad: 1 } 
+  ],
+  valorCalculado: 150000 + 2 * 40000 + 800000 + 2 * 60000 + 2 * 25000 + 35000 + 20000,
+  ubicacion: 'Sala de Edición'
+}
+
 ];
 
 

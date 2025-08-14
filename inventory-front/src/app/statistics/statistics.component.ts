@@ -21,7 +21,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pieChart', { static: false }) pieChart!: ElementRef<HTMLCanvasElement>;
   private chart!: Chart;
 
-  // Datos de ejemplo - reemplaza con tu API
   totalEnStock: number = 45;
   totalEnUso: number = 85;
   
