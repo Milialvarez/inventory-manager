@@ -87,17 +87,7 @@
         class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
     </div>
 
-    <div class="border-t pt-4">
-      <h4 class="font-semibold mb-2">Crear y agregar nuevo componente simple</h4>
-      <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" name="nuevoElementoNombre"
-        class="border rounded px-2 py-1 mr-2" />
-      <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" name="nuevoElementoTipo"
-        class="border rounded px-2 py-1 mr-2" />
-      <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor" name="nuevoElementoValor"
-        class="border rounded px-2 py-1 mr-2 w-28" />
-      <button type="button" (click)="crearYAgregarNuevoSimple()"
-        class="bg-secondary_dark hover:bg-secondary_darker text-white px-3 py-1 rounded">Crear y agregar</button>
-    </div>
+    <app-add-new-simple-button></app-add-new-simple-button>
 
     <div class="mt-6 flex gap-4">
       <button type="submit"

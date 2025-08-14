@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AddNewSimpleButtonComponent } from "../add-new-simple-button/add-new-simple-button.component";
 
-interface ComponenteAsociado {
+export interface ComponenteAsociado {
   elementoId: string;
   cantidad: number;
 }
 
-interface ElementoSimple {
+export interface ElementoSimple {
   id: string;
   nombre: string;
   tipo: string;
@@ -19,7 +20,7 @@ interface ElementoSimple {
 @Component({
   standalone: true,
   selector: 'app-add-element-page',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AddNewSimpleButtonComponent],
   templateUrl: './add-element-page.component.html',
 })
 export class AddElementPageComponent {
