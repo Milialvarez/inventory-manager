@@ -1,12 +1,17 @@
-<div class="relative min-h-screen pb-8 mb-0">
+<!-- En tu app.component.html -->
+<div class="app-container relative min-h-screen">
+  <!-- Fondo fijo que cubre toda la pantalla -->
   <div 
-    class="absolute inset-0 bg-[url('/backgrounds/background.png')] bg-cover bg-center bg-fixed"
+    class="fixed inset-0 bg-[url('/backgrounds/background.png')] bg-cover bg-center bg-no-repeat z-0"
+    style="height: 100vh; width: 100vw;"
     aria-hidden="true"
   ></div>
 
-  <div class="absolute inset-0 bg-black/40 pointer-events-none"></div>
+  <!-- Overlay oscuro -->
+  <div class="fixed inset-0 bg-black/40 pointer-events-none z-0"></div>
 
-  <div class="relative z-10">
+  <!-- Contenido principal -->
+  <div class="relative z-10 min-h-screen">
     <app-nav-bar></app-nav-bar>
     <router-outlet></router-outlet>
   </div>

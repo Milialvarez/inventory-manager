@@ -20,3 +20,23 @@
     margin: 0;
   }
 }
+
+/* Agregar en tu src/styles.scss */
+
+html, body {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+app-root {
+  display: block !important;
+  height: 100% !important;
+  width: 100%;
+}
+
+/* Asegurar que el contenedor principal tenga altura completa */
+.app-container {
+  min-height: 100vh !important;
+}

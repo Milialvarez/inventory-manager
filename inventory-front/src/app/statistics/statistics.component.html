@@ -1,4 +1,4 @@
-<div class="w-full space-y-4 mt-12">
+<div class="w-full space-y-4 mt-12 mb-8">
 <h1 class="text-white font-bold text-2xl md:text-3xl text-center tracking-wide drop-shadow-lg font-sans" style="text-shadow: 1px 1px 4px #10b981, 0 0 20px #059669;">Estadísticas:</h1>
   <!-- Gráfico de torta -->
   <div class="h-48">
@@ -11,13 +11,34 @@
       <thead class="bg-secondary_lighter">
         <tr>
           <th class="text-left py-3 px-4 font-medium text-gray-700 border-r-2 border-green-300">Tipo</th>
-          <th class="text-left py-3 px-4 font-medium text-gray-700">Cantidad</th>
+          <th class="text-left py-3 px-4 font-medium text-gray-700 border-r-2 border-green-300">Cantidad total</th>
+          <th class="text-left py-3 px-4 font-medium text-gray-700">En stock</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let item of tiposSummary" class="hover:bg-gray-50 transition-colors border-b-2 border-green-200">
           <td class="py-3 px-4 text-gray-900 border-r-2 border-green-300">{{ item.type }}</td>
-          <td class="py-3 px-4 text-gray-600 font-medium">{{ item.cantidad }}</td>
+          <td class="py-3 px-4 text-gray-600 font-medium border-r-2 border-green-300">{{ item.cantidad }}</td>
+          <td class="py-3 px-4 text-gray-600 font-medium">{{ item.desuso }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border-4 border-green-400 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-secondary_lighter">
+        <tr>
+          <th class="text-left py-3 px-4 font-medium text-gray-700 border-r-2 border-green-300">Periférico</th>
+          <th class="text-left py-3 px-4 font-medium text-gray-700 border-r-2 border-green-300">Cantidad total</th>
+          <th class="text-left py-3 px-4 font-medium text-gray-700">En stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of perifericosDetail" class="hover:bg-gray-50 transition-colors border-b-2 border-green-200">
+          <td class="py-3 px-4 text-gray-900 border-r-2 border-green-300">{{ item.type }}</td>
+          <td class="py-3 px-4 text-gray-600 font-medium border-r-2 border-green-300">{{ item.cantidad }}</td>
+          <td class="py-3 px-4 text-gray-600 font-medium">{{ item.desuso }}</td>
         </tr>
       </tbody>
     </table>

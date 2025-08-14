@@ -7,6 +7,7 @@ Chart.register(...registerables);
 interface TypeSummary {
   type: string;
   cantidad: number;
+  desuso: number;
 }
 
 @Component({
@@ -25,11 +26,18 @@ export class StatisticsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalEnUso: number = 85;
   
   tiposSummary: TypeSummary[] = [
-    { type: 'PC', cantidad: 23 },
-    { type: 'Monitor', cantidad: 18 },
-    { type: 'Periférico', cantidad: 67 },
-    { type: 'Otros', cantidad: 22 }
+    { type: 'PC', cantidad: 23, desuso: 5 },
+    { type: 'Monitor', cantidad: 18, desuso: 4},
+    { type: 'Periférico', cantidad: 67, desuso: 20 },
+    { type: 'Otros', cantidad: 22, desuso: 1 }
   ];
+
+  perifericosDetail: TypeSummary[] = [
+    {type: 'Mouse', cantidad: 20, desuso: 10},
+    {type: 'Teclado', cantidad: 20, desuso: 10},
+    {type: 'Auriculares', cantidad: 9, desuso: 0},
+    {type: 'Camaras', cantidad: 3, desuso: 0},
+  ]
 
   constructor() { }
 
