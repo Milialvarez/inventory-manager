@@ -7,11 +7,32 @@
     Volver al inventario
   </button>
 
+  <!-- Vista normal para campos principales -->
+  <ng-container *ngIf="!modoEdicion">
+    <h2 class="text-3xl font-bold mb-4">{{ elemento.nombre || elemento.personalId }}</h2>
+    <p><strong>ID personal:</strong> {{ elemento.personalId }}</p>
+    <p><strong>Descripción:</strong> {{ elemento.descripcion }}</p>
+    <p><strong>Ubicación:</strong> {{ elemento.ubicacion }}</p>
+  </ng-container>
 
-  <h2 class="text-3xl font-bold mb-4">{{ elemento.nombre || elemento.personalId }}</h2>
-  <p><strong>ID personal:</strong> {{ elemento.personalId }}</p>
-  <p><strong>Descripción:</strong> {{ elemento.descripcion }}</p>
-  <p><strong>Ubicación:</strong> {{ elemento.ubicacion }}</p>
+  <!-- Vista de edición para campos principales -->
+  <ng-container *ngIf="modoEdicion">
+    <div class="space-y-4">
+      <label class="block">
+        <span class="text-gray-700 font-bold">Nombre:</span>
+        <input type="text" [(ngModel)]="elemento.nombre" class="mt-1 block w-full rounded-lg border-2 border-gray-300 shadow-sm p-2 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </label>
+      <label class="block">
+        <span class="text-gray-700 font-bold">Descripción:</span>
+        <input type="text" [(ngModel)]="elemento.descripcion" class="mt-1 block w-full rounded-lg border-2 border-gray-300 shadow-sm p-2 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </label>
+      <label class="block">
+        <span class="text-gray-700 font-bold">Ubicación:</span>
+        <input type="text" [(ngModel)]="elemento.ubicacion" class="mt-1 block w-full rounded-lg border-2 border-gray-300 shadow-sm p-2 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </label>
+    </div>
+  </ng-container>
+
   <p><strong>Valor total:</strong> ${{ elemento.valorCalculado | number }}</p>
 
   <hr class="my-4">
@@ -22,8 +43,7 @@
   <ul *ngIf="!modoEdicion">
     <li *ngFor="let comp of elemento.componentes">
       <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
-        {{ simple.nombre }} ({{ simple.tipo }}) — Cantidad: {{ comp.cantidad }} — Valor: ${{ simple.valorUnitario |
-        number }}
+        {{ simple.nombre }} ({{ simple.tipo }}) — Cantidad: {{ comp.cantidad }} — Valor: ${{ simple.valorUnitario | number }}
       </ng-container>
     </li>
   </ul>
@@ -34,40 +54,44 @@
       <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
         <h4 class="font-semibold">{{ simple.nombre }}</h4>
         <p>{{ simple.tipo }}</p>
-        <p>Valor unitario: ${{ simple.valorUnitario | number }}</p>
-        <label class="block mt-2 text-sm">Cantidad:
-          <input type="number" [(ngModel)]="comp.cantidad" min="1" class="border rounded px-2 py-1 w-20" />
+
+        <!-- Campo de edición de Valor Unitario -->
+        <label class="block mt-2 text-sm">
+          <span class="text-gray-700 font-bold">Valor unitario:</span>
+          <input type="number" [(ngModel)]="simple.valorUnitario" min="0" class="border-2 rounded-lg px-2 py-1 w-28 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
         </label>
-        <button (click)="eliminarComponente(i)"
-          class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
+
+        <!-- Campo de edición de Cantidad -->
+        <label class="block mt-2 text-sm">
+          <span class="text-gray-700 font-bold">Cantidad:</span>
+          <input type="number" [(ngModel)]="comp.cantidad" min="1" class="border-2 rounded-lg px-2 py-1 w-20 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </label>
+        
+        <button (click)="eliminarComponente(i)" class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
       </ng-container>
     </div>
   </div>
 
   <!-- Agregar existente -->
   <div *ngIf="modoEdicion" class="mt-6">
-    <label class="block mb-2">Agregar componente existente:</label>
-    <select [(ngModel)]="nuevoElementoId" class="border rounded px-2 py-1">
-      <option value="">-- Seleccionar --</option>
-      <option *ngFor="let simple of elementosSimples" [value]="simple.id">
-        {{ simple.nombre }} ({{ simple.tipo }})
-      </option>
-    </select>
-    <button (click)="agregarComponenteExistente()"
-      class="ml-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>
+    <label class="block mb-2">
+      <span class="text-gray-700 font-bold">Agregar componente existente:</span>
+    </label>
+    <div class="flex items-center gap-2">
+      <select [(ngModel)]="nuevoElementoId" class="border-2 rounded-lg px-2 py-1 h-10 focus:outline-none focus:ring-2 focus:ring-green-500">
+        <option value="">-- Seleccionar --</option>
+        <option *ngFor="let simple of elementosSimples" [value]="simple.id">
+          {{ simple.nombre }} ({{ simple.tipo }})
+        </option>
+      </select>
+      <button (click)="agregarComponenteExistente()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg h-10">Agregar</button>
+    </div>
   </div>
 
   <!-- Crear nuevo -->
-  <div *ngIf="modoEdicion" class="mt-6 border-t pt-4">
-    <h4 class="font-semibold mb-2">Crear y agregar nuevo componente</h4>
-    <input type="text" placeholder="Nombre" [(ngModel)]="nuevoElementoNombre" class="border rounded px-2 py-1 mr-2" />
-    <input type="text" placeholder="Tipo" [(ngModel)]="nuevoElementoTipo" class="border rounded px-2 py-1 mr-2" />
-    <input type="number" placeholder="Valor unitario" [(ngModel)]="nuevoElementoValor"
-      class="border rounded px-2 py-1 mr-2 w-28" />
-    <button (click)="crearYAgregarElemento()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">Crear y
-      agregar</button>
-  </div>
-
+   <div *ngIf="modoEdicion" class="mt-6 border-t pt-4">
+        <app-add-new-simple-button></app-add-new-simple-button>
+      </div>
   <!-- Botones -->
   <div class="mt-6 flex gap-4">
     <button *ngIf="!modoEdicion" (click)="editarElemento()"
@@ -78,7 +102,6 @@
       </svg>
       Editar
     </button>
-
     <button *ngIf="modoEdicion" (click)="guardarCambios()"
       class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">Guardar cambios</button>
     <button *ngIf="modoEdicion" (click)="cancelarEdicion()"

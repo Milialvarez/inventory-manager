@@ -2,15 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AddNewSimpleButtonComponent } from "../add-new-simple-button/add-new-simple-button.component";
 
 @Component({
   standalone: true,
   selector: 'app-single-element',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddNewSimpleButtonComponent],
   templateUrl: './single-element.component.html',
 })
 export class SingleElementComponent {
   elemento: any;
+  elementoOriginal: any; // Se agrega para guardar el estado original
   mostrarNotas = false;
   modoEdicion = false;
   nuevoElementoId = '';
@@ -53,20 +55,21 @@ export class SingleElementComponent {
     this.mostrarNotas = !this.mostrarNotas;
   }
 
-notaGuardada: string = '';
+  notaGuardada: string = '';
 
-guardarNota() {
-  this.notaGuardada = this.elemento.nota || '';
-  console.log('Nota guardada:', this.notaGuardada);
-  this.mostrarNotas = false;
-}
-
+  guardarNota() {
+    this.notaGuardada = this.elemento.nota || '';
+    console.log('Nota guardada:', this.notaGuardada);
+    this.mostrarNotas = false;
+  }
 
   editarElemento() {
+    this.elementoOriginal = JSON.parse(JSON.stringify(this.elemento)); // Clonar el objeto para revertir cambios
     this.modoEdicion = true;
   }
 
   cancelarEdicion() {
+    this.elemento = JSON.parse(JSON.stringify(this.elementoOriginal)); // Restaurar el objeto original
     this.modoEdicion = false;
   }
 
@@ -80,48 +83,27 @@ guardarNota() {
     this.nuevoElementoId = '';
   }
 
-  crearYAgregarElemento() {
-    if (!this.nuevoElementoNombre.trim()) return;
-    const nuevoId = 's' + (this.elementosSimples.length + 1);
-    const nuevoElemento = {
-      id: nuevoId,
-      nombre: this.nuevoElementoNombre,
-      tipo: this.nuevoElementoTipo,
-      valorUnitario: this.nuevoElementoValor
-    };
-    this.elementosSimples.push(nuevoElemento);
-    this.elemento.componentes.push({ elementoId: nuevoId, cantidad: 1 });
+  guardarCambios() {
+    this.recalcularValorTotal();
+    
+    // Aquí llamarías a tu servicio para persistir los cambios
+    // this.inventarioService.actualizarElementoCompuesto(this.elemento);
+    
+    console.log('Cambios guardados:', this.elemento);
+    
+    this.modoEdicion = false;
+    
+    this.nuevoElementoId = '';
     this.nuevoElementoNombre = '';
     this.nuevoElementoTipo = '';
     this.nuevoElementoValor = 0;
   }
 
-  // En single-element.component.ts, agrega este método:
-
-guardarCambios() {
-  // Aquí podrías recalcular el valor total si es necesario
-  this.recalcularValorTotal();
-  
-  // Aquí llamarías a tu servicio para persistir los cambios
-  // this.inventarioService.actualizarElementoCompuesto(this.elemento);
-  
-  console.log('Cambios guardados:', this.elemento);
-  
-  // Salir del modo edición
-  this.modoEdicion = false;
-  
-  // Limpiar campos auxiliares
-  this.nuevoElementoId = '';
-  this.nuevoElementoNombre = '';
-  this.nuevoElementoTipo = '';
-  this.nuevoElementoValor = 0;
-}
-
-// Método auxiliar para recalcular el valor total
-private recalcularValorTotal() {
-  this.elemento.valorCalculado = this.elemento.componentes.reduce((total: number, comp: any) => {
-    const elementoSimple = this.obtenerElementoSimple(comp.elementoId);
-    return total + (elementoSimple ? elementoSimple.valorUnitario * comp.cantidad : 0);
-  }, 0);
-}
+  // Método auxiliar para recalcular el valor total
+  private recalcularValorTotal() {
+    this.elemento.valorCalculado = this.elemento.componentes.reduce((total: number, comp: any) => {
+      const elementoSimple = this.obtenerElementoSimple(comp.elementoId);
+      return total + (elementoSimple ? elementoSimple.valorUnitario * comp.cantidad : 0);
+    }, 0);
+  }
 }
