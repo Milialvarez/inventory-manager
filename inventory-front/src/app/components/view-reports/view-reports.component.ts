@@ -14,9 +14,9 @@ export class ViewReportsComponent {
     valorTotal: 0,
     fechaGeneracion: new Date(),
     tipos: [
-      { tipo: 'CPU', enUso: 0, enStock: 0 },
-      { tipo: 'RAM', enUso: 0, enStock: 0 },
-      { tipo: 'Placa de Video', enUso: 0, enStock: 0 }
+      { tipo: 'PC', enUso: 0, enStock: 0 },
+      { tipo: 'Monitor', enUso: 0, enStock: 0 },
+      { tipo: 'Periférico', enUso: 0, enStock: 0 }
     ]
   };
 
@@ -24,10 +24,10 @@ export class ViewReportsComponent {
     let csvContent = "data:text/csv;charset=utf-8,";
 
     csvContent += "Reporte de Inventario\n\n";
-    csvContent += "Total en uso,Total en stock,Valor total inventario\n";
+    csvContent += "Total en uso, Total en stock, Valor total inventario\n";
     csvContent += `${this.stats.totalEnUso},${this.stats.totalEnStock},${this.stats.valorTotal}\n\n`;
 
-    csvContent += "Tipo,En uso,En stock\n";
+    csvContent += "Tipo, En uso, En stock\n";
     this.stats.tipos.forEach((t) => {
       csvContent += `${t.tipo},${t.enUso},${t.enStock}\n`;
     });

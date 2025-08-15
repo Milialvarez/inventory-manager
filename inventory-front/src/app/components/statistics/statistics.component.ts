@@ -21,8 +21,8 @@ export class StatisticsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('pieChart', { static: false }) pieChart!: ElementRef<HTMLCanvasElement>;
   private chart!: Chart;
 
-  totalEnStock: number = 45;
-  totalEnUso: number = 85;
+  totalEnStock: number = 30;
+  totalEnUso: number = 100;
   
   tiposSummary: TypeSummary[] = [
     { type: 'PC', cantidad: 23, desuso: 5 },
@@ -34,8 +34,8 @@ export class StatisticsComponent implements OnInit, AfterViewInit, OnDestroy {
   perifericosDetail: TypeSummary[] = [
     {type: 'Mouse', cantidad: 20, desuso: 10},
     {type: 'Teclado', cantidad: 20, desuso: 10},
-    {type: 'Auriculares', cantidad: 9, desuso: 0},
-    {type: 'Camaras', cantidad: 3, desuso: 0},
+    {type: 'Auriculares', cantidad: 19, desuso: 0},
+    {type: 'Camaras', cantidad: 8, desuso: 0},
   ]
 
   constructor() { }
