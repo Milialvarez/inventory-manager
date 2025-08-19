@@ -21,7 +21,5 @@
 - **Chart.js** → Generación de gráficos estadísticos dinámicos.  
 - **Docker** → Encapsulación del proyecto para ejecución en cualquier entorno.  
 
-> ⚠️ Nota! El proyecto aun está en desarrollo
-
 > ⚠️ Nota: El proyecto está en desarrollo. Próximamente se incorporará un backend con Spring Boot para una gestión completa del inventario.  
 
