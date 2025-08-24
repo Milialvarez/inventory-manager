@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: inventory-db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # Permite contraseña vacía para root
+      MYSQL_DATABASE: inventory_manager
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d  
+    ports:
+      - "3307:3306" 
+    networks:
+      - inventory-network
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:
+
+networks:
+  inventory-network:
+    driver: bridge
