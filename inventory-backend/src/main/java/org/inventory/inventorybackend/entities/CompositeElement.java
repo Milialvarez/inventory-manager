@@ -20,7 +20,7 @@ public class CompositeElement {
     private Long id;
 
     @Column(name = "personal_id", nullable = false, unique = true)
-    private String personalId;
+    private Long personalId;
 
     @Column(nullable = false)
     private String name;

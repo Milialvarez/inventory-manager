@@ -1,9 +1,15 @@
 package org.inventory.inventorybackend.dtos;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.inventory.inventorybackend.entities.CompositeElementType;
 
 import java.util.List;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CompositeElementDTO {
     private Long personal_id;
     private String element_name;
