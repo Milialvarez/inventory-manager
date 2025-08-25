@@ -142,6 +142,14 @@ public class CompositeElementService {
         return dto;
     }
 
+    private Double getTotalValue(Long id) {
+        return 0.0;
+    }
+
+    private List<SimpleElementDTO> getElementsRelated(Long id) {
+        return List.of();
+    }
+
     private CompositeElement convertToEntity(CompositeElementDTO dto) {
         CompositeElement entity = new CompositeElement();
 
