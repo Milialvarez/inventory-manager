@@ -1,30 +1,36 @@
 package org.inventory.inventorybackend.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+
 @Entity
+@Table(name = "simple_elements")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SimpleElement {
 
     @Id
-    @GeneratedValue
-    @Column(nullable = false, name = "id_simple_element")
-    private int simpleElementId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column
-    private String simpleElementName;
+    @Column(nullable = false)
+    private String name;
 
-    @Column
-    private String simpleElementDescription;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ElementType type;
 
-    @Column
-    private Double simpleElementPrice;
+    @Column(name = "unit_value", nullable = false)
+    private Double unitValue;
+
+    @OneToMany(mappedBy = "simpleElement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElementRelation> relatedComposites;
 }

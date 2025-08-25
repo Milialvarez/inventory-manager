@@ -2,32 +2,39 @@ package org.inventory.inventorybackend.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
 @Entity
-@Data
-@AllArgsConstructor
+@Table(name = "composite_element")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 public class CompositeElement {
 
     @Id
-    @GeneratedValue()
-    @Column(unique = true, nullable = false, name = "id_composite_element")
-    private Long compositeElementId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column
-    private String compositeElementName;
+    @Column(name = "personal_id", nullable = false, unique = true)
+    private String personalId;
 
-    @Column
-    private String compositeElementDescription;
+    @Column(nullable = false)
+    private String name;
 
-    @Column
-    private String compositeElementType;
+    private String description;
 
-    @OneToMany
-    @Column
-    private List<SimpleElement> simple_elements;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CompositeElementType type;
+
+    private String location;
+
+    private String notes;
+
+    @OneToMany(mappedBy = "compositeElement", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ElementRelation> relatedElements;
 }
