@@ -81,7 +81,7 @@
         <option *ngFor="let simple of elementosSimples" [value]="simple.id">{{ simple.nombre }} ({{ simple.tipo }})
         </option>
       </select>
-      <input type="number" [(ngModel)]="nuevaCantidad" name="nuevaCantidad" min="1"
+      <input type="number" [(ngModel)]="nuevaCantidad" name="nuevaCantidad" min="1" placeholder="cantidad"
         class="border rounded px-3 py-2 w-20" />
       <button type="button" (click)="agregarComponenteExistente()"
         class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Agregar</button>

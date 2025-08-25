@@ -106,4 +106,17 @@ export class SingleElementComponent {
       return total + (elementoSimple ? elementoSimple.valorUnitario * comp.cantidad : 0);
     }, 0);
   }
+
+  guardarComponente(index: number) {
+  const comp = this.elemento.componentes[index];
+  const simple = this.obtenerElementoSimple(comp.elementoId);
+
+  if (simple && comp.cantidad > 0 && simple.valorUnitario >= 0) {
+    this.recalcularValorTotal();
+    console.log(`Componente ${simple.nombre} guardado con cantidad: ${comp.cantidad}, valor: ${simple.valorUnitario}`);
+  } else {
+    console.warn('Valores inválidos en el componente');
+  }
+}
+
 }

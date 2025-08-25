@@ -49,28 +49,41 @@
   </ul>
 
   <!-- Vista edición -->
-  <div *ngIf="modoEdicion" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div *ngFor="let comp of elemento.componentes; let i = index" class="border rounded-lg p-4 bg-gray-50 shadow">
-      <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
-        <h4 class="font-semibold">{{ simple.nombre }}</h4>
-        <p>{{ simple.tipo }}</p>
+<div *ngIf="modoEdicion" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div *ngFor="let comp of elemento.componentes; let i = index" class="border rounded-lg p-4 bg-gray-50 shadow">
+    <ng-container *ngIf="obtenerElementoSimple(comp.elementoId) as simple">
+      <h4 class="font-semibold">{{ simple.nombre }}</h4>
+      <p>{{ simple.tipo }}</p>
 
-        <!-- Campo de edición de Valor Unitario -->
-        <label class="block mt-2 text-sm">
-          <span class="text-gray-700 font-bold">Valor unitario:</span>
-          <input type="number" [(ngModel)]="simple.valorUnitario" min="0" class="border-2 rounded-lg px-2 py-1 w-28 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
-        </label>
+      <!-- Campo de edición de Valor Unitario -->
+      <label class="block mt-2 text-sm">
+        <span class="text-gray-700 font-bold">Valor unitario:</span>
+        <input type="number" [(ngModel)]="simple.valorUnitario" min="0"
+          class="border-2 rounded-lg px-2 py-1 w-28 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </label>
 
-        <!-- Campo de edición de Cantidad -->
-        <label class="block mt-2 text-sm">
-          <span class="text-gray-700 font-bold">Cantidad:</span>
-          <input type="number" [(ngModel)]="comp.cantidad" min="1" class="border-2 rounded-lg px-2 py-1 w-20 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
-        </label>
-        
-        <button (click)="eliminarComponente(i)" class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Eliminar</button>
-      </ng-container>
-    </div>
+      <!-- Campo de edición de Cantidad -->
+      <label class="block mt-2 text-sm">
+        <span class="text-gray-700 font-bold">Cantidad:</span>
+        <input type="number" [(ngModel)]="comp.cantidad" min="1"
+          class="border-2 rounded-lg px-2 py-1 w-20 h-10 focus:outline-none focus:ring-2 focus:ring-green-500" />
+      </label>
+
+      <!-- Botones de acción -->
+      <div class="flex gap-2 mt-3">
+        <button (click)="guardarComponente(i)" 
+          class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">
+          Guardar
+        </button>
+        <button (click)="eliminarComponente(i)" 
+          class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+          Eliminar
+        </button>
+      </div>
+    </ng-container>
   </div>
+</div>
+
 
   <!-- Agregar existente -->
   <div *ngIf="modoEdicion" class="mt-6">
