@@ -26,7 +26,7 @@ public class SimpleElement {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ElementType type;
+    private SimpleElementType type;
 
     @Column(name = "unit_value", nullable = false)
     private Double unitValue;
