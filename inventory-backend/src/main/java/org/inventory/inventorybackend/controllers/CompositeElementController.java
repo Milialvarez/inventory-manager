@@ -33,7 +33,6 @@ public class CompositeElementController {
             return ResponseEntity.ok(compositeElements); // 200 OK
 
         } catch (Exception e) {
-            // Log del error (recomiendo usar SLF4J)
             System.err.println("Error al obtener composite elements: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500
         }

@@ -19,11 +19,11 @@ public class ElementRelation {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "composite_element_id", nullable = false)
+    @JoinColumn(name = "id_composite_element", nullable = false)
     private CompositeElement compositeElement;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "simple_element_id", nullable = false)
+    @JoinColumn(name = "id_simple_element", nullable = false)
     private SimpleElement simpleElement;
 
     @Column(nullable = false)
