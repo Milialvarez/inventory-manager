@@ -72,7 +72,7 @@ public class CompositeElementController {
 
         } catch (Exception e) {
             System.err.println("Error al crear composite element: " + e.getMessage());
-            e.printStackTrace(); // ✅ Agrega esto para ver el stacktrace completo
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

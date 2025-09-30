@@ -1,6 +1,8 @@
 package org.inventory.inventorybackend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,13 +24,13 @@ public class CompositeElementDTO {
     private String element_name;
 
     @NotNull(message = "Element type is required")
+    @JsonProperty("element_type")
+    @Enumerated(EnumType.STRING)
     private CompositeElementType element_type;
 
-    // Valor propio (OPCIONAL, si no se envía se usa 0)
     @JsonProperty("own_value")
     private Double ownValue;
 
-    // Valor total CALCULADO (OPCIONAL, solo para respuestas)
     @JsonProperty("total_value")
     private Double totalValue;
 
@@ -36,9 +38,7 @@ public class CompositeElementDTO {
 
     private String location;
 
-    // OPCIONAL - puede ser null o no enviarse
     private String notes;
 
-    // OPCIONAL - puede ser null o no enviarse
     private List<SimpleElementDTO> elements_related;
 }

@@ -1,5 +1,7 @@
 package org.inventory.inventorybackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum CompositeElementType {
     PC,
     MONITOR,
@@ -7,5 +9,10 @@ public enum CompositeElementType {
     KEYBOARD,
     HEADPHONES,
     CAMERAS,
-    OTHERS
+    OTHERS;
+
+    @JsonCreator
+    public static CompositeElementType fromString(String value) {
+        return CompositeElementType.valueOf(value.toUpperCase());
+    }
 }
