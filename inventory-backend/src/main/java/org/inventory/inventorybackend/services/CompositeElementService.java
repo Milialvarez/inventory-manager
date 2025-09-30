@@ -98,46 +98,53 @@ public class CompositeElementService {
         dto.setLocation(entity.getLocation());
         dto.setNotes(entity.getNotes());
         dto.setOwnValue(entity.getOwnValue());
-        dto.setElement_type(CompositeElementType.valueOf(String.valueOf(entity.getType())));
+        dto.setElement_type(entity.getType());
 
-        // Mapeo de elementos relacionados a SimpleElementDTO
-        List<SimpleElementDTO> elements_related = entity.getRelatedElements().stream()
-                .map(er -> {
-                    SimpleElementDTO simpleDTO = new SimpleElementDTO();
-                    simpleDTO.setId(Math.toIntExact(er.getSimpleElement().getId()));
-                    simpleDTO.setName(er.getSimpleElement().getName());
-                    simpleDTO.setType(SimpleElementType.valueOf(String.valueOf(er.getSimpleElement().getType())));
-                    simpleDTO.setUnit_value(er.getSimpleElement().getUnitValue());
-                    simpleDTO.setAmount(er.getAmount());
-                    return simpleDTO;
-                })
-                .toList();
+        List<SimpleElementDTO> elements_related = null;
+        double relatedElementsSum = 0.0;
+
+        if (entity.getRelatedElements() != null && !entity.getRelatedElements().isEmpty()) {
+            elements_related = entity.getRelatedElements().stream()
+                    .map(er -> {
+                        SimpleElementDTO simpleDTO = new SimpleElementDTO();
+                        simpleDTO.setId(Math.toIntExact(er.getSimpleElement().getId()));
+                        simpleDTO.setName(er.getSimpleElement().getName());
+                        simpleDTO.setType(er.getSimpleElement().getType());
+                        simpleDTO.setUnit_value(er.getSimpleElement().getUnitValue());
+                        simpleDTO.setAmount(er.getAmount());
+                        return simpleDTO;
+                    })
+                    .toList();
+
+            // Calcular suma solo si hay elementos
+            relatedElementsSum = elements_related.stream()
+                    .mapToDouble(e -> e.getUnit_value() * e.getAmount())
+                    .sum();
+        }
 
         dto.setElements_related(elements_related);
 
-        // Cálculo del total_value sumando unitValue * amount
-        double totalValue = elements_related.stream()
-                .mapToDouble(e -> e.getUnit_value() * e.getAmount())
-                .sum();
-
-        dto.setTotalValue(totalValue + dto.getOwnValue());
+        // Calcular total_value = own_value + suma de (unit_value * amount)
+        double ownValue = entity.getOwnValue() != null ? entity.getOwnValue() : 0.0;
+        dto.setTotalValue(ownValue + relatedElementsSum);
 
         return dto;
     }
 
 
 
-    private List<SimpleElementDTO> getElementsRelated(Long id) {
-        return List.of();
-    }
 
     private CompositeElement convertToEntity(CompositeElementDTO dto) {
-        CompositeElement entity = new CompositeElement();
+        CompositeElement entity = CompositeElement.builder()
+                .personalId(dto.getPersonal_id())
+                .name(dto.getElement_name())
+                .type(dto.getElement_type())
+                .description(dto.getDescription())
+                .location(dto.getLocation())
+                .notes(dto.getNotes())
+                .ownValue(dto.getOwnValue() != null ? dto.getOwnValue() : 0.0)
+                .build();
 
-        entity.setName(dto.getElement_name());
-        entity.setDescription(dto.getDescription());
-        entity.setLocation(dto.getLocation());
-        entity.setPersonalId(dto.getPersonal_id());
 
         return entity;
     }

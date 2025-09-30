@@ -68,11 +68,12 @@ public class CompositeElementController {
     public ResponseEntity<CompositeElementDTO> createCompositeElement(@Valid @RequestBody CompositeElementDTO compositeElementDTO) {
         try {
             CompositeElementDTO createdElement = compositeElementService.save(compositeElementDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdElement); // 201 Created
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdElement);
 
         } catch (Exception e) {
             System.err.println("Error al crear composite element: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // 400 Bad Request
+            e.printStackTrace(); // ✅ Agrega esto para ver el stacktrace completo
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
