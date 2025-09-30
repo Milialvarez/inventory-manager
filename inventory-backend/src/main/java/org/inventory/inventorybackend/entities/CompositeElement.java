@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+
 @Entity
 @Table(name = "composite_element")
 @NoArgsConstructor
@@ -34,6 +35,9 @@ public class CompositeElement {
     private String location;
 
     private String notes;
+
+    @Column(name = "own_value", nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
+    private Double ownValue = 0.0;
 
     @OneToMany(mappedBy = "compositeElement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElementRelation> relatedElements;

@@ -97,6 +97,7 @@ public class CompositeElementService {
         dto.setDescription(entity.getDescription());
         dto.setLocation(entity.getLocation());
         dto.setNotes(entity.getNotes());
+        dto.setOwnValue(entity.getOwnValue());
         dto.setElement_type(CompositeElementType.valueOf(String.valueOf(entity.getType())));
 
         // Mapeo de elementos relacionados a SimpleElementDTO
@@ -119,7 +120,7 @@ public class CompositeElementService {
                 .mapToDouble(e -> e.getUnit_value() * e.getAmount())
                 .sum();
 
-        dto.setTotal_value(totalValue);
+        dto.setTotalValue(totalValue + dto.getOwnValue());
 
         return dto;
     }

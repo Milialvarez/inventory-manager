@@ -1,5 +1,6 @@
 package org.inventory.inventorybackend.controllers;
 
+import jakarta.validation.Valid;
 import org.inventory.inventorybackend.dtos.CompositeElementDTO;
 import org.inventory.inventorybackend.services.CompositeElementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class CompositeElementController {
      * Crea un nuevo CompositeElement
      */
     @PostMapping
-    public ResponseEntity<CompositeElementDTO> createCompositeElement(@RequestBody CompositeElementDTO compositeElementDTO) {
+    public ResponseEntity<CompositeElementDTO> createCompositeElement(@Valid @RequestBody CompositeElementDTO compositeElementDTO) {
         try {
             CompositeElementDTO createdElement = compositeElementService.save(compositeElementDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdElement); // 201 Created
