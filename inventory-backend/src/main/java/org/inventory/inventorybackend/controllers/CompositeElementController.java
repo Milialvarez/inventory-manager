@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/composite-elements")
-@CrossOrigin(origins = "*")
 public class CompositeElementController {
 
     @Autowired
@@ -66,7 +65,9 @@ public class CompositeElementController {
      */
     @PostMapping
     public ResponseEntity<CompositeElementDTO> createCompositeElement(@Valid @RequestBody CompositeElementDTO compositeElementDTO) {
+        System.out.println(compositeElementDTO.getElement_type().getClass().getName());
         try {
+            System.out.println("DEBUG REQUEST DTO: " + compositeElementDTO);
             CompositeElementDTO createdElement = compositeElementService.save(compositeElementDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdElement);
 
