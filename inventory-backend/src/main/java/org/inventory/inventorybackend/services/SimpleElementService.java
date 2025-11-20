@@ -17,6 +17,7 @@ public class SimpleElementService {
 
 
     public List<SimpleElementDTO> getSimpleElementsRelated(Long id) {
-        List<SimpleElement> simpleElementDTOs = this.simpleElementRepository.findByCompositeId(id);
+        List<SimpleElementDTO> simpleElementDTOs = this.simpleElementRepository.findSimpleElementsByCompositeId(id);
+        return simpleElementDTOs;
     }
 }
